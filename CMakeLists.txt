@@ -2,8 +2,8 @@
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 
-# Old enough to support Ubuntu Xenial.
-cmake_minimum_required(VERSION 3.5.1)
+# CMake 3.13 is the minimum version that supports modern CMake paradigm
+cmake_minimum_required(VERSION 3.13)
 
 if(POLICY CMP0048)
   cmake_policy(SET CMP0048 NEW)
@@ -84,6 +84,9 @@ set(RE2_SOURCES
     )
 
 add_library(re2 ${RE2_SOURCES})
+target_include_directory(re2 
+  PUBLIC 
+    ${CMAKE_CURRENT_SOURCE_DIR})
 add_library(re2::re2 ALIAS re2)
 
 if(RE2_BUILD_TESTING)
