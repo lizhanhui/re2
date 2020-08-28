@@ -56,8 +56,6 @@ if(USEPCRE)
   list(APPEND EXTRA_TARGET_LINK_LIBRARIES pcre)
 endif()
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-
 set(RE2_SOURCES
     re2/bitstate.cc
     re2/compile.cc
@@ -89,6 +87,7 @@ target_include_directories(re2
     ${CMAKE_CURRENT_SOURCE_DIR})
 add_library(re2::re2 ALIAS re2)
 
+set(RE2_BUILD_TESTING OFF)
 if(RE2_BUILD_TESTING)
   set(TESTING_SOURCES
       re2/testing/backtrack.cc
@@ -143,19 +142,21 @@ if(RE2_BUILD_TESTING)
   endforeach(target)
 endif()
 
-set(RE2_HEADERS
-    re2/filtered_re2.h
-    re2/re2.h
-    re2/set.h
-    re2/stringpiece.h
-    )
+#set(RE2_HEADERS
+#    re2/filtered_re2.h
+#    re2/re2.h
+#    re2/set.h
+#    re2/stringpiece.h
+#    )
+#
+#install(FILES ${RE2_HEADERS}
+#        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/re2)
 
-install(FILES ${RE2_HEADERS}
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/re2)
-install(TARGETS re2 EXPORT re2Config
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-install(EXPORT re2Config
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/re2 NAMESPACE re2::)
+#install(TARGETS re2 EXPORT re2Config
+#        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+#        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+#install(EXPORT re2Config
+#        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/re2 NAMESPACE re2::)
+#
