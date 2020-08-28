@@ -84,7 +84,7 @@ set(RE2_SOURCES
     )
 
 add_library(re2 ${RE2_SOURCES})
-target_include_directory(re2 
+target_include_directories(re2 
   PUBLIC 
     ${CMAKE_CURRENT_SOURCE_DIR})
 add_library(re2::re2 ALIAS re2)
