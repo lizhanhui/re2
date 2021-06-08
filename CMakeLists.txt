@@ -56,8 +56,6 @@ if(USEPCRE)
   list(APPEND EXTRA_TARGET_LINK_LIBRARIES pcre)
 endif()
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-
 set(RE2_SOURCES
     re2/bitstate.cc
     re2/compile.cc
@@ -83,7 +81,12 @@ set(RE2_SOURCES
     util/strutil.cc
     )
 
-add_library(re2 ${RE2_SOURCES})
+add_library(re2 STATIC)
+target_sources(re2 PRIVATE ${RE2_SOURCES})
+target_include_directories(re2 
+  PUBLIC 
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:re2>)
 add_library(re2::re2 ALIAS re2)
 
 if(RE2_BUILD_TESTING)
@@ -99,6 +102,9 @@ if(RE2_BUILD_TESTING)
       )
 
   add_library(testing STATIC ${TESTING_SOURCES})
+  target_include_directories(testing 
+    PUBLIC 
+      $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 
   set(TEST_TARGETS
       charclass_test
